@@ -16,3 +16,29 @@ model User{
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Course{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String
+  price Float
+  category String
+  imageUrl String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// model Enrollment{
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   userId String @db.ObjectId
+//   courseId String @db.ObjectId
+//   enrolledAt DateTime @default(now())
+// }
+// model Lesson{
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   courseId String @db.ObjectId
+//   title String        
+//   content String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
