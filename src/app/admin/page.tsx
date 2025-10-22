@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import AdminLayout from "@/component/AdminLayout";
 
 interface User {
   id: string;
@@ -50,21 +51,9 @@ const Admin = () => {
   }
 
   return (
-    <div className="min-h-screen p-8 text-black">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
-        <div className="bg-white shadow rounded-lg p-6">
-          <p className="text-gray-600">
-            Welcome, <span className="font-semibold">{user.email}</span>
-          </p>
-          <p className="text-sm text-gray-500 mt-2">User ID: {user.id}</p>
-        </div>
-
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Admin Controls</h2>
-        </div>
-      </div>
-    </div>
+    <>
+    <AdminLayout/>
+    </>
   );
 };
 

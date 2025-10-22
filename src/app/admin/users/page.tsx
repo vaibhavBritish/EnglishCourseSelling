@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUsers, deleteUser } from "../../../../redux/userSlice";
 import { RootState } from "../../../../redux/store";
 import { useRouter } from "next/navigation";
+import AdminLayout from "@/component/AdminLayout";
 
 const AllUsers = () => {
   const dispatch = useDispatch();
   const users = useSelector((state: RootState) => state.user.users);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [adminuser, setAdminUser] = useState<any>(null);
+  const [adminUser, setAdminUser] = useState<any>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const AllUsers = () => {
   }, [router]);
 
   useEffect(() => {
-    if (!adminuser) return;
+    if (!adminUser) return;
 
     const fetchUsers = async () => {
       try {
@@ -52,7 +53,7 @@ const AllUsers = () => {
     };
 
     fetchUsers();
-  }, [dispatch, adminuser]);
+  }, [dispatch, adminUser]);
 
   const handleDelete = async (id: string) => {
     try {
@@ -62,13 +63,13 @@ const AllUsers = () => {
       if (!res.ok) throw new Error("Delete user failed");
       dispatch(deleteUser(id));
     } catch (error) {
-      console.log("Delete user failed:", error);
+      console.error("Delete user failed:", error);
     }
   };
 
   if (loading)
     return (
-      <div className="flex items-center justify-center min-h-screen text-xl">
+      <div className="flex items-center text-gray-500 justify-center min-h-screen text-xl">
         Loading...
       </div>
     );
@@ -80,39 +81,40 @@ const AllUsers = () => {
       </div>
     );
 
-  if (!adminuser) return null;
+  if (!adminUser) return null;
 
   return (
-    <div className="text-black">
-      <div className="max-w-4xl mx-auto p-8">
-        <h1 className="text-2xl font-bold mb-4">All Users</h1>
+    <AdminLayout>
+      <div className="max-w-5xl mx-auto p-8 text-gray-900">
+        <h1 className="text-3xl font-bold mb-6 text-indigo-700">All Users</h1>
+
         {users.length === 0 ? (
           <p className="text-gray-500">No users found.</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-300 rounded-lg overflow-hidden">
-              <thead className="bg-gray-100">
+          <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+            <table className="min-w-full border border-gray-200">
+              <thead className="bg-indigo-50">
                 <tr>
-                  <th className="text-left py-2 px-4 border-b">Username</th>
-                  <th className="text-left py-2 px-4 border-b">Email</th>
-                  <th className="text-left py-2 px-4 border-b">Role</th>
-                  <th className="text-left py-2 px-4 border-b">Actions</th>
+                  <th className="text-left py-3 px-4 border-b font-semibold">Username</th>
+                  <th className="text-left py-3 px-4 border-b font-semibold">Email</th>
+                  <th className="text-left py-3 px-4 border-b font-semibold">Role</th>
+                  <th className="text-left py-3 px-4 border-b font-semibold">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user: any) => (
-                  <tr key={user.id} className="hover:bg-gray-50">
+                  <tr key={user.id} className="hover:bg-gray-50 transition-colors">
                     <td className="py-2 px-4 border-b capitalize">
                       {user.username || user.name}
                     </td>
                     <td className="py-2 px-4 border-b">{user.email}</td>
                     <td className="py-2 px-4 border-b capitalize">
-                      {user.isAdmin ? "admin" : "user"}
+                      {user.isAdmin ? "Admin" : "User"}
                     </td>
-                    <td className="py-2 px-4 border-b capitalize">
+                    <td className="py-2 px-4 border-b">
                       <button
                         onClick={() => handleDelete(user.id)}
-                        className="text-white font-bold bg-red-600 px-3 py-2 cursor-pointer hover:bg-red-700 rounded-2xl"
+                        className="bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition-colors"
                       >
                         Delete
                       </button>
@@ -124,7 +126,7 @@ const AllUsers = () => {
           </div>
         )}
       </div>
-    </div>
+    </AdminLayout>
   );
 };
 
