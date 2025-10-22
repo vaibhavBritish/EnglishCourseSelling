@@ -16,7 +16,7 @@ const Courses = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // ✅ Check Admin Auth
+
     useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -37,7 +37,7 @@ const Courses = () => {
         checkAuth();
     }, [router]);
 
-    // ✅ Fetch Courses
+
     useEffect(() => {
         if (!admin) return;
 
@@ -63,7 +63,7 @@ const Courses = () => {
         fetchCourses();
     }, [dispatch, admin]);
 
-    // ✅ Delete Course
+
     const handleDelete = async (id: string) => {
         if (!confirm("Are you sure you want to delete this course?")) return;
 

@@ -5,7 +5,7 @@ import AdminLayout from "@/component/AdminLayout";
 
 const EditCourse = () => {
   const router = useRouter();
-  const params = useParams(); // get course ID from URL
+  const params = useParams();
   const courseId = params.id;
 
   const [course, setCourse] = useState<any>({
@@ -13,6 +13,7 @@ const EditCourse = () => {
     description: "",
     price: "",
     category: "",
+    duration: "",
     imageUrl: "",
   });
   const [imageBase64, setImageBase64] = useState<string | null>(null);
@@ -59,6 +60,7 @@ const EditCourse = () => {
       const payload = {
         ...course,
         price: parseFloat(course.price),
+        duration: parseInt(course.duration),
         imageBase64: imageBase64 || undefined,
       };
 
@@ -137,11 +139,22 @@ const EditCourse = () => {
           </label>
 
           <label className="flex flex-col">
+            Duration
+            <input
+              type="number"
+              name="duration"
+              value={course.duration}
+              onChange={handleChange}
+              className="border p-2 rounded mt-1"
+              required
+            />
+          </label>
+
+          <label className="flex flex-col">
             Image
             <input type="file" accept="image/*" onChange={handleImageChange} className="mt-1" />
           </label>
 
-          {/* Preview uploaded image or existing image */}
           {imageBase64 ? (
             <img src={imageBase64} alt="Preview" className="w-64 h-40 object-cover mt-2 rounded" />
           ) : (

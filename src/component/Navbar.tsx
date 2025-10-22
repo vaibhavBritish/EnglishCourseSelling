@@ -16,13 +16,13 @@ const Navbar = () => {
         </Link>
 
         <nav className="hidden md:flex items-center gap-10 font-semibold">
-          <Link href="#" className="hover:text-blue-400 transition">
+          <Link href="/" className="hover:text-blue-400 transition">
             Home
           </Link>
-          <Link href="#" className="hover:text-blue-400 transition">
+          <Link href="/about" className="hover:text-blue-400 transition">
             About
           </Link>
-          <Link href="#" className="hover:text-blue-400 transition">
+          <Link href="/courses" className="hover:text-blue-400 transition">
             Courses
           </Link>
           <Link href="#" className="hover:text-blue-400 transition">
@@ -76,13 +76,13 @@ const Navbar = () => {
 
       {menuOpen && (
         <div className="md:hidden bg-gray-800 text-white text-center flex flex-col gap-4 py-4 font-semibold">
-          <Link href="#" onClick={() => setMenuOpen(false)}>
+          <Link href="/" onClick={() => setMenuOpen(false)}>
             Home
           </Link>
-          <Link href="#" onClick={() => setMenuOpen(false)}>
+          <Link href="/about" onClick={() => setMenuOpen(false)}>
             About
           </Link>
-          <Link href="#" onClick={() => setMenuOpen(false)}>
+          <Link href="/courses" onClick={() => setMenuOpen(false)}>
             Courses
           </Link>
           <Link href="#" onClick={() => setMenuOpen(false)}>

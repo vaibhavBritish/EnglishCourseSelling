@@ -10,9 +10,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Invalid JSON payload" }, { status: 400 });
   }
 
-  const { title, description, price, category, imageBase64 } = body;
+  const { title, description, price, category, imageBase64,duration } = body;
 
-  if (!title || !description || !price || !category || !imageBase64) {
+  if (!title || !description || !price || !category || !imageBase64|| !duration)  {
     return NextResponse.json({ message: "All fields are required" }, { status: 400 });
   }
 
@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
         description,
         price: parseFloat(price),
         category,
+        duration:parseInt(duration),
         imageUrl: uploadResponse.url,
       },
     });

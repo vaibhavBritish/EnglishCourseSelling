@@ -22,6 +22,7 @@ model Course{
   title String
   description String
   price Float
+  duration Int?
   category String
   imageUrl String
   createdAt DateTime @default(now())
