@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCourses } from "../../../redux/courseSlice";
+import Link from "next/link";
 
 const Courses = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Courses = () => {
     return (
       <div className="flex flex-col items-center justify-center h-[80vh] bg-white text-blue-600">
         <div className="w-14 h-14 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <p className="text-lg font-semibold">Fetching Courses...</p>
+        <p className="text-lg font-semibold">Loading Courses...</p>
       </div>
     );
   }
@@ -109,7 +110,7 @@ const Courses = () => {
         <section className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {courses.map((course: any) => (
             <div
-              key={course._id}
+              key={course._id}  
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
             >
               <div className="relative w-full h-48">
@@ -136,9 +137,15 @@ const Courses = () => {
                   <li>💰 Price: ₹{course.price || "NA"}</li>
                 </ul>
 
-                <button className="w-full bg-[#155DFC] text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                <Link href={`/courses/${course.id}`}>
+                  <button className="w-full bg-[#155DFC] text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Watch Videos
+                  </button>
+                </Link>
+
+                {/* <button className="w-full bg-[#155DFC] text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
                   Enroll Now
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

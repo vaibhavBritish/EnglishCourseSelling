@@ -73,8 +73,6 @@ const Courses = () => {
             });
 
             if (!res.ok) throw new Error("Failed to delete course");
-
-            // Update redux state
             dispatch(setCourses(courses.filter(course => course.id !== id)));
         } catch (err: any) {
             alert(err.message || "Something went wrong!");
@@ -131,6 +129,11 @@ const Courses = () => {
                                     <Link href={`/admin/courses/editCourse/${course.id}`}>
                                         <button className='text-md bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-all duration-200'>
                                             Edit
+                                        </button>
+                                    </Link>
+                                    <Link href={`/admin/courses/${course.id}`}>
+                                        <button className='text-md bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition-all duration-200'>
+                                            Watch Video
                                         </button>
                                     </Link>
                                     <button

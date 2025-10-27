@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/client";
-import {imageKit} from "@/lib/imageKit.js"
+import { imageKit } from "@/lib/imageKit.js"
 
 export async function POST(req: NextRequest) {
   let body;
@@ -10,9 +10,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Invalid JSON payload" }, { status: 400 });
   }
 
-  const { title, description, price, category, imageBase64,duration } = body;
+  const { title, description, price, category, imageBase64, duration } = body;
 
-  if (!title || !description || !price || !category || !imageBase64|| !duration)  {
+  if (!title || !description || !price || !category || !imageBase64 || !duration) {
     return NextResponse.json({ message: "All fields are required" }, { status: 400 });
   }
 
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         description,
         price: parseFloat(price),
         category,
-        duration:parseInt(duration),
+        duration: parseInt(duration),
         imageUrl: uploadResponse.url,
       },
     });
@@ -43,7 +43,20 @@ export async function POST(req: NextRequest) {
 }
 
 
-export async function GET(Request:NextRequest){
-    const courses = await prisma.course.findMany();
-    return NextResponse.json({message:"All courses",courses},{status:200});
+export async function GET() {
+  try {
+    const courses = await prisma.course.findMany({
+      include: { videos: true },
+    });
+    return NextResponse.json({
+      success: true,
+      courses,
+    });
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return NextResponse.json({                    
+      success: false,
+      message: "Error fetching courses",
+    });
+  }
 }

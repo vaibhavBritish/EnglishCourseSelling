@@ -4,27 +4,29 @@ import { imageKit } from "@/lib/imageKit.js"
 import { ObjectId } from "mongodb";
 
 export async function GET(Request: NextRequest, context: { params: Promise<{ id: string }> }) {
-    try {
-        const { id } = await context.params;
-        const course = await prisma.course.findUnique({
-            where: { id: id }
-        })
-        return NextResponse.json(course);
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+    const { id } = await context.params;
+    const course = await prisma.course.findUnique({
+      where: { id: id },
+      include: { videos: true }
+    })
+    return NextResponse.json(course);
+  } catch (error) {
+    console.log(error)
+    return NextResponse.json({ message: "Error fetching course" }, { status: 500 })
+  }
 }
 
 export async function DELETE(Request: NextRequest, context: { params: Promise<{ id: string }> }) {
-    try {
-        const { id } = await context.params;
-        const course = await prisma.course.delete({
-            where: { id: id }
-        })
-        return NextResponse.json(course);
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+    const { id } = await context.params;
+    const course = await prisma.course.delete({
+      where: { id: id }
+    })
+    return NextResponse.json(course);
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 
