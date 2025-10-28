@@ -18,7 +18,6 @@ const CoursesByIDinAdmin = () => {
   const [editVideo, setEditVideo] = useState<any>(null);
   const [newTitle, setNewTitle] = useState("");
 
-  // ✅ Check admin authentication
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -37,7 +36,7 @@ const CoursesByIDinAdmin = () => {
     checkAuth();
   }, [router]);
 
-  // ✅ Fetch course details
+ 
   useEffect(() => {
     const fetchCourse = async () => {
       setLoading(true);
@@ -59,7 +58,7 @@ const CoursesByIDinAdmin = () => {
     if (id) fetchCourse();
   }, [id, dispatch]);
 
-  // ✅ Delete video
+  
   const handleDelete = async (videoId: string) => {
     if (!confirm("Are you sure you want to delete this video?")) return;
 
@@ -82,7 +81,6 @@ const CoursesByIDinAdmin = () => {
     }
   };
 
-  // ✅ Edit video title
   const handleEdit = async () => {
     if (!newTitle.trim()) return alert("Title cannot be empty!");
 
@@ -111,7 +109,7 @@ const CoursesByIDinAdmin = () => {
     }
   };
 
-  // 🌀 Loading state
+
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen text-gray-600 text-lg">
@@ -119,7 +117,7 @@ const CoursesByIDinAdmin = () => {
       </div>
     );
 
-  // ⚠️ Error state
+
   if (error)
     return (
       <div className="flex flex-col justify-center items-center h-screen text-center">
@@ -150,10 +148,8 @@ const CoursesByIDinAdmin = () => {
       </div>
     );
 
-  // ✅ MAIN UI
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 p-8 relative">
-      {/* Floating Add Video Button */}
       <Link
         href="/admin/courses/video"
         className="fixed bottom-10 right-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg p-4 flex items-center gap-2 text-lg font-medium transition"
