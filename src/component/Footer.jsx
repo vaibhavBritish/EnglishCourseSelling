@@ -5,17 +5,17 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from "react-icons/f
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-10 border-t border-gray-700">
+    <footer className="bg-gray-700 text-gray-300 py-10 border-t border-gray-700">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        {/* Logo & Description */}
+       
         <div>
-          <Image src="/logo.png" alt="Logo" width={150} height={50} />
+          <Image src="/logo.png" alt="Logo" width={250} height={150} />
           <p className="mt-4 text-sm text-gray-400 leading-relaxed">
             Empowering learners worldwide through high-quality online language courses.
           </p>
         </div>
 
-        {/* Quick Links */}
+   
         <div>
           <h1 className="text-lg font-semibold mb-4 text-white">Quick Links</h1>
           <ul className="space-y-2 text-sm">
@@ -42,7 +42,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Courses */}
         <div>
           <h1 className="text-lg font-semibold mb-4 text-white">Courses</h1>
           <ul className="space-y-2 text-sm">

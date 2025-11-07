@@ -1,66 +1,105 @@
 "use client";
+
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Menu, X, User, LogOut } from "lucide-react";
 import { useAuth } from "@/app/context/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { user, logout, loading } = useAuth();
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="text-black shadow-md sticky top-0 z-50 bg-white p-3">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-        <Link href={"/"}>
-          <h1 className="text-2xl font-bold">Logo</h1>
+    <motion.header
+      initial={{ y: -80 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-xl shadow-md border-b border-gray-100 "
+          : "bg-transparent backdrop-blur-md "
+      }`}
+    >
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo.png"
+            alt="LearnWithUniConnect"
+            width={160}
+            height={160}
+            className="w-40 h-auto transition-transform hover:scale-105"
+          />
+         
         </Link>
 
-        <nav className="hidden md:flex items-center gap-10 font-semibold">
-          <Link href="/" className="hover:text-blue-400 transition">
-            Home
-          </Link>
-          <Link href="/about" className="hover:text-blue-400 transition">
-            About
-          </Link>
-          <Link href="/courses" className="hover:text-blue-400 transition">
-            Courses
-          </Link>
-          <Link href="/testimonials" className="hover:text-blue-400 transition">
-            Testimonials
-          </Link>
-          <Link href="/contactus" className="hover:text-blue-400 transition">
-            Contact Us
-          </Link>
+        <nav className="hidden md:flex items-center gap-8 font-semibold">
+          {[
+            { label: "Home", href: "/" },
+            { label: "About", href: "/about" },
+            { label: "Courses", href: "/courses" },
+            { label: "Testimonials", href: "/testimonials" },
+            { label: "Contact", href: "/contactus" },
+          ].map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="relative text-gray-700 hover:text-indigo-600 transition group"
+            >
+              {link.label}
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-blue-500 to-indigo-600 group-hover:w-full transition-all duration-300 rounded-full"></span>
+            </Link>
+          ))}
         </nav>
 
-        <div className="hidden md:flex gap-3 items-center">
+        <div className="hidden md:flex items-center gap-4">
           {loading ? (
-            <div className="text-gray-500">Loading...</div>
+            <div className="text-gray-500 text-sm">Loading...</div>
           ) : user ? (
             <>
-              <div className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-md">
-                <User size={20} />
-                <span className="font-semibold">{user.email}</span>
-              </div>
-              <button
-                onClick={logout}
-                className="bg-red-500 text-white font-bold hover:bg-red-600 px-4 py-2 rounded-md transition flex items-center gap-2"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full shadow-sm"
               >
-                <LogOut size={18} />
+                <User size={18} className="text-blue-600" />
+                <span className="text-sm font-semibold text-gray-800">
+                  {user.email}
+                </span>
+              </motion.div>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                onClick={logout}
+                className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-rose-600 text-white font-semibold px-4 py-2 rounded-full shadow-md"
+              >
+                <LogOut size={16} />
                 Logout
-              </button>
+              </motion.button>
             </>
           ) : (
             <>
               <Link href="/auth/login">
-                <button className="bg-blue-500 text-white font-bold hover:bg-blue-600 px-4 py-2 rounded-md transition">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold px-4 py-2 rounded-full shadow-md"
+                >
                   Login
-                </button>
+                </motion.button>
               </Link>
               <Link href="/auth/register">
-                <button className="bg-blue-500 text-white font-bold hover:bg-blue-600 px-4 py-2 rounded-md transition">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold px-4 py-2 rounded-full shadow-md"
+                >
                   Sign Up
-                </button>
+                </motion.button>
               </Link>
             </>
           )}
@@ -68,61 +107,74 @@ const Navbar = () => {
 
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden focus:outline-none"
+          className="md:hidden text-gray-700 focus:outline-none"
         >
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {menuOpen && (
-        <div className="md:hidden bg-gray-800 text-white text-center flex flex-col gap-4 py-4 font-semibold">
-          <Link href="/" onClick={() => setMenuOpen(false)}>
-            Home
-          </Link>
-          <Link href="/about" onClick={() => setMenuOpen(false)}>
-            About
-          </Link>
-          <Link href="/courses" onClick={() => setMenuOpen(false)}>
-            Courses
-          </Link>
-          <Link href="#" onClick={() => setMenuOpen(false)}>
-            Contact Us
-          </Link>
-          <div className="flex flex-col gap-3 mt-4 px-4">
-            {user ? (
-              <>
-                <div className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-700 rounded-md">
-                  <User size={20} />
-                  <span>{user.username}</span>
-                </div>
-                <button
-                  onClick={() => {
-                    logout();
-                    setMenuOpen(false);
-                  }}
-                  className="bg-red-500 text-white hover:bg-red-600 px-4 py-2 rounded-md transition"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              <>
-                <Link href="/auth/login">
-                  <button className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md transition w-full">
-                    Login
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-gradient-to-b from-blue-600 via-indigo-600 to-purple-700 text-white flex flex-col items-center gap-5 py-6 font-medium text-lg shadow-lg"
+          >
+            {[
+              { label: "Home", href: "/" },
+              { label: "About", href: "/about" },
+              { label: "Courses", href: "/courses" },
+              { label: "Testimonials", href: "/testimonials" },
+              { label: "Contact", href: "/contactus" },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="hover:bg-white/10 py-2 px-4 rounded-md transition-all w-full text-center"
+              >
+                {link.label}
+              </Link>
+            ))}
+
+            <div className="flex flex-col gap-3 mt-4 px-4 w-full">
+              {user ? (
+                <>
+                  <div className="flex items-center justify-center gap-2 px-4 py-2 bg-white/10 rounded-full">
+                    <User size={20} />
+                    <span>{user.username}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setMenuOpen(false);
+                    }}
+                    className="bg-gradient-to-r from-red-500 to-rose-600 text-white py-2 rounded-full font-semibold hover:scale-105 transition-all"
+                  >
+                    Logout
                   </button>
-                </Link>
-                <Link href="/auth/register">
-                  <button className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md transition w-full">
-                    Sign Up
-                  </button>
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-    </header>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/login">
+                    <button className="bg-white text-blue-700 py-2 rounded-full font-semibold w-full hover:bg-gray-100 transition">
+                      Login
+                    </button>
+                  </Link>
+                  <Link href="/auth/register">
+                    <button className="bg-white text-blue-700 py-2 rounded-full font-semibold w-full hover:bg-gray-100 transition">
+                      Sign Up
+                    </button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   );
 };
 

@@ -70,7 +70,7 @@ const Courses = () => {
   }
 
   return (
-    <div className="text-black">
+    <div className="text-black scroll-smooth mt-20" id="course">
       <div className="relative w-full h-64 md:h-[420px]">
         <Image
           src="/coursesBanner.jpg"
@@ -205,9 +205,9 @@ const Courses = () => {
           skills with us. Choose your course and begin your journey toward
           fluency.
         </p>
-        <button className="bg-white text-[#155DFC] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+        <Link href={"#course"}><button className="bg-white text-[#155DFC] scroll-smooth px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
           View All Courses
-        </button>
+        </button></Link>
       </section>
     </div>
   );
