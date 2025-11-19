@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/client";
 import { imageKit } from "@/lib/imageKit.js"
+import slugify from "slugify";
 
 export async function POST(req: NextRequest) {
   let body;
@@ -24,12 +25,19 @@ export async function POST(req: NextRequest) {
       useUniqueFileName: true,
     });
 
+    const slug = slugify(title,{
+      lower:true,
+      strict:true,
+      trim:true
+    })
+
     const course = await prisma.course.create({
       data: {
         title,
         description,
         price: parseFloat(price),
         category,
+        slug,
         duration: parseInt(duration),
         imageUrl: uploadResponse.url,
       },

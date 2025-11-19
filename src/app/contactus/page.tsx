@@ -32,14 +32,14 @@ const ContactUs = () => {
       });
       const data = await res.json();
       if (res.ok) {
-        setResponseMsg("✅ Message sent successfully!");
+        setResponseMsg(" Message sent successfully!");
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
-        setResponseMsg(data.error || "❌ Failed to send message. Try again.");
+        setResponseMsg(data.error || " Failed to send message. Try again.");
       }
     } catch (error) {
       console.error(error);
-      setResponseMsg("❌ Something went wrong. Please try again.");
+      setResponseMsg(" Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }

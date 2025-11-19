@@ -3,10 +3,11 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCourses } from "../../../redux/courseSlice";
+import { setCourses } from "../../../../redux/courseSlice";
 import Link from "next/link";
+import Leadform from "@/component/Leadform";
 
-const Courses = () => {
+const EnglishCourse = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -15,7 +16,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch("/api/admin/course");
+        const res = await fetch("/api/courses/english");
         const data = await res.json();
 
         if (Array.isArray(data)) {
@@ -80,9 +81,9 @@ const Courses = () => {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">Our Courses</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">English</h1>
           <p className="text-base md:text-lg max-w-2xl">
-            Master English or French with interactive, structured, and practical
+            Master English with interactive, structured, and practical
             online lessons designed to boost your fluency and confidence.
           </p>
         </div>
@@ -110,7 +111,7 @@ const Courses = () => {
         <section className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
           {courses.map((course: any) => (
             <div
-              key={course._id}
+              key={course.id}
               className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
             >
               <div className="relative w-full h-48">
@@ -133,13 +134,13 @@ const Courses = () => {
 
                 <ul className="text-gray-700 text-sm space-y-1 mb-4">
                   <li>🕒 Duration: {course.duration || "NA"} Months</li>
-                  <li>🎯 Level: {course.level || "Beginner"}</li>
+                  <li>🎯 Level: {course.level || "NA"}</li>
                   <li>💰 Price: ${course.price || "NA"}</li>
                 </ul>
                 <div className="mt-auto flex space-x-4">
-                  <Link href={`/courses/info/${course.slug}`}>
+                  <Link href={`/courses/course-info/${course.slug}`}>
                     <button className="w-full bg-[#155DFC] text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition">
-                      View Course
+                      Read More
                     </button>
                   </Link>
 
@@ -215,8 +216,12 @@ const Courses = () => {
           View All Courses
         </button></Link>
       </section>
+
+      <section>
+        <Leadform/>
+      </section>
     </div>
   );
 };
 
-export default Courses;
+export default EnglishCourse;

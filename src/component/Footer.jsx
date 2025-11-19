@@ -9,13 +9,18 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
        
         <div>
-          <Image src="/logo.png" alt="Logo" width={250} height={150} />
+          <Image src="/learnwithuniconnect.png" alt="Logo" width={250} height={150} />
+
+
+          <h2 className="text-white text-xl font-semibold mt-3">
+            Learn With Uniconnect
+          </h2>
+
           <p className="mt-4 text-sm text-gray-400 leading-relaxed">
             Empowering learners worldwide through high-quality online language courses.
           </p>
         </div>
 
-   
         <div>
           <h1 className="text-lg font-semibold mb-4 text-white">Quick Links</h1>
           <ul className="space-y-2 text-sm">

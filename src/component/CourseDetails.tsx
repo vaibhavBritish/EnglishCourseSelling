@@ -8,7 +8,7 @@ export default function CourseDetails() {
   const [course, setCourse] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch logged-in user from /api/auth/me
+  //  Fetch logged-in user from /api/auth/me
   async function getCurrentUser() {
     try {
       const res = await fetch("/api/auth/me", {
@@ -22,7 +22,7 @@ export default function CourseDetails() {
     }
   }
 
-  // ✅ Fetch course details
+  //  Fetch course details
   const fetchCourse = async () => {
     try {
       const res = await fetch(`/api/courses/${id}`, {
@@ -42,13 +42,13 @@ export default function CourseDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  // ✅ Handle success/cancel redirect
+  //  Handle success/cancel redirect
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const paymentStatus = params.get("payment");
 
     if (paymentStatus === "success") {
-      alert("✅ Payment successful! You now have access to the videos.");
+      alert(" Payment successful! You now have access to the videos.");
       window.history.replaceState({}, document.title, window.location.pathname);
       fetchCourse();
     } else if (paymentStatus === "cancelled") {
@@ -58,7 +58,7 @@ export default function CourseDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  // ✅ Enroll handler with real user check
+  //  Enroll handler with real user check
   const handleEnroll = async () => {
     const user = await getCurrentUser();
     if (!user) {
@@ -103,7 +103,7 @@ export default function CourseDetails() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-12 text-black">
-      {/* ✅ Course Image */}
+      {/*  Course Image */}
       <div className="relative w-full h-64 mb-6">
         <Image
           src={course.imageUrl || "/defaultCourse.jpg"}
@@ -113,7 +113,7 @@ export default function CourseDetails() {
         />
       </div>
 
-      {/* ✅ Course Info */}
+      {/*  Course Info */}
       <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
       <p className="text-gray-700 mb-6">{course.description}</p>
 
@@ -135,7 +135,7 @@ export default function CourseDetails() {
 
       <hr className="my-8" />
 
-      {/* ✅ Course Videos */}
+      {/*  Course Videos */}
       {course.hasAccess ? (
         <div>
           <h2 className="text-2xl font-semibold mb-4">Course Videos</h2>

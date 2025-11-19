@@ -49,7 +49,7 @@ const VideoUpload = () => {
         if (data.courses) dispatch(setCourses(data.courses));
         else setMessage("⚠️ Failed to load courses.");
       } catch {
-        setMessage("❌ Error fetching courses.");
+        setMessage(" Error fetching courses.");
       }
     };
     fetchCourses();
@@ -102,7 +102,7 @@ const VideoUpload = () => {
       const data = await res.json();
 
       if (data.success) {
-        setMessage("✅ Video uploaded successfully!");
+        setMessage(" Video uploaded successfully!");
         setFormData({
           title: "",
           duration: "",
@@ -111,7 +111,7 @@ const VideoUpload = () => {
         });
         setPreviewUrl(null);
       } else {
-        setMessage(`❌ Upload failed: ${data.message || "Try again."}`);
+        setMessage(` Upload failed: ${data.message || "Try again."}`);
       }
     } catch {
       setMessage("⚠️ Something went wrong while uploading.");
@@ -237,7 +237,7 @@ const VideoUpload = () => {
         {message && (
           <p
             className={`mt-5 text-center font-semibold ${
-              message.startsWith("✅")
+              message.startsWith("")
                 ? "text-green-600"
                 : message.startsWith("⚠️")
                 ? "text-yellow-600"

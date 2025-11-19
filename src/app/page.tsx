@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { link } from "fs";
+import Leadform from "@/component/Leadform";
 
 export default function Home() {
   const courses = [
@@ -29,8 +31,8 @@ export default function Home() {
   ];
 
   const languages = [
-    { id: 1, img: "/advancedEnglish.jpg", title: "English" },
-    { id: 2, img: "/Learn French.jpg", title: "French" },
+    { id: 1, img: "/advancedEnglish.jpg", title: "English", link: "/courses/english" },
+    { id: 2, img: "/Learn French.jpg", title: "French", link: "/courses/french" },
   ];
 
   const testimonials = [
@@ -62,30 +64,32 @@ export default function Home() {
         "Access to beginner courses",
         "Community support",
         "Monthly webinars",
+        "3 Months Course Access"
       ],
-      price: "19",
+      price: "300",
     },
     {
       id: 2,
       plan: "Standard",
       features: [
-        "Access to all courses",
+        "Access to course",
         "Priority support",
         "Weekly webinars",
         "Certificate of completion",
+        "6 Months Course Access"
       ],
-      price: "49",
+      price: "600",
     },
     {
       id: 3,
       plan: "Premium",
       features: [
-        "All-access learning",
         "1-on-1 mentorship",
         "Personalized study plan",
         "Certificate & placement support",
+        "12 Months Course Access",
       ],
-      price: "99",
+      price: "1000",
     },
   ];
 
@@ -170,7 +174,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Languages Section */}
+
       <section className="py-20 text-center">
         <h2 className="text-3xl font-bold mb-10 text-[#155DFC]">
           Choose Your Language
@@ -182,18 +186,20 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               className="relative rounded-2xl overflow-hidden w-[330px] h-[230px] shadow-md hover:shadow-xl"
             >
-              <Image src={lang.img} alt={lang.title} fill className="object-cover" />
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                <h3 className="text-white text-2xl font-semibold tracking-wide">
-                  {lang.title}
-                </h3>
-              </div>
+              <Link href={lang.link}>
+                <Image src={lang.img} alt={lang.title} fill className="object-cover" />
+                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                  <h3 className="text-white text-2xl font-semibold tracking-wide">
+                    {lang.title}
+                  </h3>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Testimonials */}
+
       <section className="bg-[#f3f6fb] py-20 px-6 text-center">
         <h2 className="text-3xl font-bold mb-10 text-[#155DFC]">
           What Our Students Say
@@ -215,7 +221,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pricing Plans */}
+
       <section className="py-20 text-center">
         <h2 className="text-3xl font-bold mb-4 text-[#155DFC]">
           Flexible Pricing Plans
@@ -229,20 +235,18 @@ export default function Home() {
             <motion.div
               key={price.id}
               whileHover={{ scale: 1.03 }}
-              className={`rounded-2xl p-8 bg-white shadow-lg hover:shadow-2xl transition transform ${
-                i === 1 ? "border-2 border-blue-500" : ""
-              }`}
+              className={`rounded-2xl p-8 bg-white shadow-lg hover:shadow-2xl transition transform ${i === 1 ? "border-2 border-blue-500" : ""
+                }`}
             >
               <h3
-                className={`text-2xl font-bold mb-4 ${
-                  i === 1 ? "text-blue-600" : "text-gray-800"
-                }`}
+                className={`text-2xl font-bold mb-4 ${i === 1 ? "text-blue-600" : "text-gray-800"
+                  }`}
               >
                 {price.plan}
               </h3>
               <ul className="text-gray-700 mb-6 text-left space-y-2">
                 {price.features.map((f, index) => (
-                  <li key={index}>✅ {f}</li>
+                  <li key={index}> {f}</li>
                 ))}
               </ul>
               <p className="text-4xl font-bold text-blue-600 mb-4">
@@ -250,11 +254,10 @@ export default function Home() {
                 <span className="text-sm text-gray-500">/month</span>
               </p>
               <button
-                className={`w-full py-3 rounded-xl font-semibold ${
-                  i === 1
+                className={`w-full py-3 rounded-xl font-semibold ${i === 1
                     ? "bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:opacity-90"
                     : "bg-gray-100 hover:bg-gray-200 text-gray-800"
-                }`}
+                  }`}
               >
                 Get Started
               </button>
@@ -263,7 +266,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Newsletter */}
+      <section>
+        <Leadform/>
+      </section>
+
+
       <section className="bg-[#f3f6fb] py-20 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="text-center md:text-left">
@@ -294,6 +301,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }

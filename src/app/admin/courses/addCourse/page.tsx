@@ -75,7 +75,7 @@ const AddCourses = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input type="number" name="price" value={formData.price} onChange={handleChange}
-              placeholder="Price (₹)" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required />
+              placeholder="Price ($)" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required />
             <input type="text" name="category" value={formData.category} onChange={handleChange}
               placeholder="Category" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required />
           </div>

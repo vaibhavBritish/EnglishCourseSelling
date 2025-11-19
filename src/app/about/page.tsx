@@ -1,3 +1,4 @@
+import Leadform from '@/component/Leadform'
 import Image from 'next/image'
 import React from 'react'
 
@@ -195,6 +196,10 @@ const AboutUs = () => {
                         </button>
                     </div>
                 </div>
+            </section>
+
+            <section>
+                <Leadform />
             </section>
         </div>
     )

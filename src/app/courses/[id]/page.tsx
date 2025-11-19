@@ -3,22 +3,48 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Play, Lock, CheckCircle } from "lucide-react";
+import { Lock, CheckCircle } from "lucide-react";
+
+
+
+type VideoType = {
+  id: string;
+  title: string;
+  videoUrl: string;
+};
+
+type CourseType = {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  imageUrl?: string;
+  hasAccess?: boolean;
+  videos?: VideoType[];
+};
+
+type UserType = {
+  id: string;
+  name?: string;
+  email?: string;
+};
+
+
 
 export default function CourseDetails() {
   const { id } = useParams();
-  const [course, setCourse] = useState<any>(null);
+  const [course, setCourse] = useState<CourseType | null>(null);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserType | null>(null);
 
   const fetchUser = async () => {
     try {
       const res = await fetch("/api/auth/me", { credentials: "include" });
       if (!res.ok) return;
       const data = await res.json();
-      setUser(data.user);
+      setUser(data.user as UserType);
     } catch (err) {
-      console.error("Error fetching user:", err);
+      console.log(err);
     }
   };
 
@@ -26,12 +52,11 @@ export default function CourseDetails() {
     try {
       const res = await fetch(`/api/courses/${id}`, { cache: "no-store" });
       const data = await res.json();
-      setCourse(data);
+      setCourse(data as CourseType);
     } catch (err) {
-      console.error("Error fetching course:", err);
-    } finally {
-      setLoading(false);
+      console.log(err);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -39,7 +64,7 @@ export default function CourseDetails() {
     fetchCourse();
   }, [id]);
 
-  // Handle payment status
+  // Payment success handler
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const paymentStatus = params.get("payment");
@@ -49,30 +74,21 @@ export default function CourseDetails() {
       const confirm = async () => {
         try {
           if (sessionId) {
-            await fetch(`/api/stripe/session?session_id=${sessionId}`, {
-              cache: "no-store",
-            });
+            await fetch(`/api/stripe/session?session_id=${sessionId}`, { cache: "no-store" });
           }
-        } catch {
-          // ignore
-        } finally {
-          await fetchCourse();
-          alert("✅ Payment successful! You now have access to the videos.");
-          window.history.replaceState({}, "", `/courses/${id}`);
+        } catch (err) {
+          console.log(err);
         }
+        await fetchCourse();
+        alert("Payment successful! You now have access.");
+        window.history.replaceState({}, "", `/courses/${id}`);
       };
       confirm();
-    } else if (paymentStatus === "cancelled") {
-      alert("Payment cancelled. Try again anytime.");
     }
   }, [id]);
 
-  // Handle enrollment
   const handleEnroll = async () => {
-    if (!user) {
-      alert("Please login first to enroll in this course.");
-      return;
-    }
+    if (!user) return alert("Please login first to enroll.");
 
     try {
       const res = await fetch("/api/stripe/checkout", {
@@ -83,140 +99,118 @@ export default function CourseDetails() {
       });
 
       const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Unable to start checkout session.");
-      }
+      if (data.url) window.location.href = data.url;
     } catch (err) {
-      console.error("Checkout error:", err);
-      alert("Payment initiation failed.");
+      console.log(err);
     }
   };
 
   if (loading)
     return (
-      <div className="flex items-center justify-center h-screen text-blue-600 font-medium text-lg">
-        Loading course details...
+      <div className="flex items-center justify-center h-screen text-indigo-600 text-xl font-semibold">
+        Loading...
       </div>
     );
 
   if (!course)
     return (
-      <div className="flex items-center justify-center h-screen text-red-600 font-semibold">
-        Course not found.
+      <div className="flex items-center justify-center h-screen text-red-600 text-xl font-bold">
+        Course Not Found
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-100 mt-20 pb-20">
-      {/* Hero Section */}
-      <div className="relative h-[60vh] w-full overflow-hidden rounded-b-[3rem]">
-        <Image
-          src={course.imageUrl || "/defaultCourse.jpg"}
-          alt={course.title}
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="absolute bottom-16 left-10 max-w-3xl text-white"
-        >
-          <h1 className="text-5xl font-bold mb-4 drop-shadow-lg">
-            {course.title}
-          </h1>
-          <p className="text-lg text-gray-200 max-w-2xl leading-relaxed">
-            {course.description?.slice(0, 160)}...
-          </p>
-        </motion.div>
-      </div>
+    <div className="min-h-screen bg-gray-50 pt-24 pb-20">
+      <div className="max-w-7xl mx-auto px-6">
 
-      {/* Course Info Section */}
-      <div className="max-w-6xl mx-auto mt-[-80px] relative z-10 px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="backdrop-blur-xl bg-white/80 border border-white/40 shadow-xl rounded-3xl p-8"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                {course.title}
-              </h2>
-              <p className="text-gray-600 leading-relaxed">
-                Learn from top instructors and gain practical skills.
-              </p>
-            </div>
+        
+        <div className="grid lg:grid-cols-2 gap-14 items-center mb-20">
+          <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-4">
+              {course.title}
+            </h1>
 
-            <div className="flex items-center gap-4">
-              <p className="text-xl font-semibold text-gray-900">
-                💰 <span className="text-indigo-600">${course.price}</span>
-              </p>
+            <p className="text-gray-600 text-lg leading-relaxed mb-6">
+              {course.description?.slice(0, 250)}...
+            </p>
+
+            <div className="flex items-center gap-5 mb-8">
+              <p className="text-3xl font-bold text-indigo-600">${course.price}</p>
 
               {course.hasAccess ? (
-                <span className="flex items-center gap-2 bg-green-100 text-green-700 px-5 py-2 rounded-full font-medium">
+                <span className="flex items-center gap-2 bg-green-100 text-green-700 px-5 py-2 rounded-full font-semibold text-sm">
                   <CheckCircle size={18} /> Enrolled
                 </span>
               ) : (
                 <button
                   onClick={handleEnroll}
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg transition-all"
                 >
                   Enroll Now
                 </button>
               )}
             </div>
-          </div>
 
-          <hr className="border-gray-300 my-6" />
-
-          {/* Videos Section */}
-          {course.hasAccess ? (
-            <div>
-              <h3 className="text-2xl font-semibold text-gray-800 mb-6">
-                🎬 Course Videos
-              </h3>
-              {course.videos?.length > 0 ? (
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {course.videos.map((video: any) => (
-                    <motion.div
-                      key={video.id}
-                      whileHover={{ scale: 1.03 }}
-                      transition={{ type: "spring", stiffness: 200 }}
-                      className="bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden"
-                    >
-                      <div className="relative h-48 w-full">
-                        <video
-                          src={video.videoUrl}
-                          controls
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <h4 className="font-semibold text-gray-800 truncate">
-                          {video.title}
-                        </h4>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-500 italic">
-                  No videos uploaded yet. Please check back later.
+            {!course.hasAccess && (
+              <div className="bg-white border border-gray-200 rounded-2xl shadow-md p-6">
+                <p className="text-gray-600 text-center italic">
+                  Unlock lifetime access to all videos and resources.
                 </p>
-              )}
-            </div>
+              </div>
+            )}
+          </motion.div>
+
+         
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="relative w-full h-[420px] rounded-3xl overflow-hidden shadow-xl"
+          >
+            <Image
+              src={course.imageUrl || "/defaultCourse.jpg"}
+              alt={course.title}
+              fill
+              priority
+              className="object-cover object-center scale-105 hover:scale-110 transition duration-700"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          </motion.div>
+        </div>
+
+      
+        <div className="mt-10">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">Course Videos</h2>
+
+          {course.hasAccess ? (
+            course.videos && course.videos.length > 0 ? (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                {course.videos.map((video: VideoType) => (
+                  <motion.div
+                    key={video.id}
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ type: "spring", stiffness: 200 }}
+                    className="bg-white border border-gray-200 rounded-xl shadow-md overflow-hidden"
+                  >
+                    <div className="relative h-48 w-full">
+                      <video src={video.videoUrl} controls className="w-full h-full object-cover" />
+                    </div>
+                    <div className="p-4">
+                      <h4 className="font-semibold text-gray-800 truncate">{video.title}</h4>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 italic">No videos available yet.</p>
+            )
           ) : (
-            <div className="text-center py-12 text-gray-600 italic bg-gradient-to-r from-gray-100 to-gray-50 border border-gray-200 rounded-2xl shadow-inner">
+            <div className="text-center py-16 bg-white border border-gray-200 rounded-2xl shadow-md">
               <Lock className="mx-auto mb-4 text-gray-500" size={40} />
-              Enroll in this course to unlock all videos and resources.
+              <p className="text-gray-600 text-lg italic">Purchase the course to unlock all content.</p>
             </div>
           )}
-        </motion.div>
+        </div>
       </div>
     </div>
   );

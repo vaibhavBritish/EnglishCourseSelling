@@ -135,6 +135,8 @@ const EditCourse = () => {
               <option value="">Select Category</option>
               <option value="English">English</option>
               <option value="French">French</option>
+              <option value="IELTS">IELTS</option>
+              <option value="pte">PTE</option>
             </select>
           </label>
 

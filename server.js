@@ -18,6 +18,6 @@ app.prepare()
     });
   })
   .catch((err) => {
-    console.error('❌ Error starting server:', err);
+    console.error(' Error starting server:', err);
     process.exit(1);
   });

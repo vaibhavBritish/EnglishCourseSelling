@@ -123,7 +123,7 @@ const Courses = () => {
                                     />
                                 )}
                                 <p className='text-gray-700 mb-1'>{course.description}</p>
-                                <p className='text-sm text-gray-500 font-semibold'>₹{course.price}</p>
+                                <p className='text-sm text-gray-500 font-semibold'>${course.price}</p>
                                 <p className='text-xs text-gray-400'>{course.category}</p>
                                 <div className='flex gap-3 mt-3'>
                                     <Link href={`/admin/courses/editCourse/${course.id}`}>

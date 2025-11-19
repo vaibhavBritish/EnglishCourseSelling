@@ -167,7 +167,7 @@ const CoursesByIDinAdmin = () => {
 
         <div className="flex flex-wrap gap-6 mb-8">
           <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-xl font-medium">
-            💰 ₹{course.price}
+            💰 ${course.price}
           </div>
           <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-xl font-medium">
             ⏳ {course.duration || "N/A"} months

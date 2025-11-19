@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
+import Leadform from "@/component/Leadform";
 
 const testimonials = [
   {
@@ -91,6 +92,9 @@ const Testimonials = () => {
             ))}
           </div>
         </div>
+      </section>
+      <section>
+        <Leadform/>
       </section>
     </div>
   );

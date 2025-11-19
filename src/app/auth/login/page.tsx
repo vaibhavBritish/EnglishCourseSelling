@@ -39,7 +39,7 @@ const Login = () => {
       alert(data.message || "Something went wrong");
     } else {
       login(data.user);
-      alert("✅ Login Successful!");
+      alert(" Login Successful!");
       router.push("/");
     }
   };
@@ -108,7 +108,14 @@ const Login = () => {
           >
             {loading ? "Logging in..." : <>Login <LogIn size={18} /></>}
           </button>
+
         </form>
+          <button
+            onClick={() => window.location.href = "/api/auth/google"}
+            className="w-full mt-4 bg-red-500 text-white p-3 rounded-xl"
+          >
+            Continue with Google
+          </button>
 
         <div className="text-center mt-6 text-sm text-gray-500">
           Don’t have an account?{" "}
