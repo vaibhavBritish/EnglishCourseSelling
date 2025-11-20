@@ -33,6 +33,8 @@ export default function Home() {
   const languages = [
     { id: 1, img: "/advancedEnglish.jpg", title: "English", link: "/courses/english" },
     { id: 2, img: "/Learn French.jpg", title: "French", link: "/courses/french" },
+    { id: 3, img: "/ielts.jpg", title: "IELTS", link: "/courses/ielts" },
+    { id: 4, img: "/pte.jpg", title: "PTE", link: "/courses/pte" },
   ];
 
   const testimonials = [
@@ -177,14 +179,14 @@ export default function Home() {
 
       <section className="py-20 text-center">
         <h2 className="text-3xl font-bold mb-10 text-[#155DFC]">
-          Choose Your Language
+          Choose Your Course
         </h2>
-        <div className="flex justify-center flex-wrap gap-10">
+        <div className="flex justify-center flex-wrap gap-8">
           {languages.map((lang) => (
             <motion.div
               key={lang.id}
               whileHover={{ scale: 1.05 }}
-              className="relative rounded-2xl overflow-hidden w-[330px] h-[230px] shadow-md hover:shadow-xl"
+              className="relative rounded-2xl overflow-hidden w-[300px] h-[200px] shadow-md hover:shadow-xl"
             >
               <Link href={lang.link}>
                 <Image src={lang.img} alt={lang.title} fill className="object-cover" />

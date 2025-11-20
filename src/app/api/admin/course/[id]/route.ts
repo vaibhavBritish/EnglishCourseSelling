@@ -26,12 +26,12 @@ export async function DELETE(Request: NextRequest, context: { params: Promise<{ 
       return NextResponse.json({ error: "Invalid course ID" }, { status: 400 });
     }
 
-    // 1️⃣ Delete all videos first
+
     await prisma.video.deleteMany({
       where: { courseId: id },
     });
 
-    // 2️⃣ Now delete the course
+  
     const course = await prisma.course.delete({
       where: { id },
     });

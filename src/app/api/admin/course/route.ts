@@ -11,9 +11,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Invalid JSON payload" }, { status: 400 });
   }
 
-  const { title, description, price, category, imageBase64, duration } = body;
+  const { title, description, description_more, price, category, imageBase64, duration } = body;
 
-  if (!title || !description || !price || !category || !imageBase64 || !duration) {
+  if (!title || !description || !description_more || !price || !category || !imageBase64 || !duration) {
     return NextResponse.json({ message: "All fields are required" }, { status: 400 });
   }
 
@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       data: {
         title,
         description,
+        description_more,
         price: parseFloat(price),
         category,
         slug,

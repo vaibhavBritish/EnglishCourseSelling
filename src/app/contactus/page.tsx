@@ -96,7 +96,7 @@ const ContactUs = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-800">Address</h3>
-                <p className="text-gray-600">123 Main Street, New Delhi, India</p>
+                <p className="text-gray-600">100-1470 Hurontario Street Mississauga, ON L5G 3H4, Canada</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -105,7 +105,8 @@ const ContactUs = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-800">Phone</h3>
-                <p className="text-gray-600">+91 9876 54321</p>
+                <p className="text-gray-600">+1(437)-294-0510
+</p>
               </div>
             </div>
             <div className="flex items-center gap-4">

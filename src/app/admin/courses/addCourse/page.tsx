@@ -6,6 +6,7 @@ const AddCourses = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    description_more: "",
     price: "",
     category: "",
     duration: "",
@@ -50,6 +51,7 @@ const AddCourses = () => {
       setFormData({
         title: "",
         description: "",
+        description_more: "",
         price: "",
         category: "",
         duration: "",
@@ -70,6 +72,10 @@ const AddCourses = () => {
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" required />
 
           <textarea name="description" value={formData.description} onChange={handleChange}
+            placeholder="Enter course description" rows={3}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none" required />
+
+             <textarea name="description_more" value={formData.description_more} onChange={handleChange}
             placeholder="Enter course description" rows={3}
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none" required />
 

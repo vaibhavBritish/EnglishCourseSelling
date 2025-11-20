@@ -3,10 +3,11 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCourses } from "../../../redux/courseSlice";
+import { setCourses } from "../../../../redux/courseSlice";
 import Link from "next/link";
+import Leadform from "@/component/Leadform";
 
-const Courses = () => {
+const ieltsCourse = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -15,7 +16,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch("/api/admin/course");
+        const res = await fetch("/api/courses/celpip");
         const data = await res.json();
 
         if (Array.isArray(data)) {
@@ -80,9 +81,9 @@ const Courses = () => {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center text-white px-4">
-          <h1 className="text-3xl md:text-5xl font-bold mb-3">Our Courses</h1>
+          <h1 className="text-3xl md:text-5xl font-bold mb-3">CELPIP</h1>
           <p className="text-base md:text-lg max-w-2xl">
-            Master English or French with interactive, structured, and practical
+            Master English with interactive, structured, and practical
             online lessons designed to boost your fluency and confidence.
           </p>
         </div>
@@ -215,8 +216,12 @@ const Courses = () => {
           View All Courses
         </button></Link>
       </section>
+      
+      <section>
+        <Leadform />
+      </section>
     </div>
   );
 };
 
-export default Courses;
+export default ieltsCourse;

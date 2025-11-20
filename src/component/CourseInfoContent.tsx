@@ -80,6 +80,7 @@ const CourseInfoContent: React.FC<CourseInfoContentProps> = ({ course }) => {
           <h2 className="text-3xl font-bold mb-6 text-gray-900">About This Course</h2>
 
           <p className="text-lg text-gray-700 leading-relaxed mb-6">{course.description}</p>
+          <p className="text-lg text-gray-700 leading-relaxed mb-6">{course.description_more}</p>
 
           <div className="my-6 bg-gray-50 p-5 rounded-xl border border-gray-200 inline-flex items-center gap-3">
             <span className="font-semibold text-2xl text-gray-700">Price:</span>

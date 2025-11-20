@@ -37,6 +37,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ id: str
       id: course.id,
       title: course.title,
       description: course.description,
+      description_more: course.description_more,
       price: course.price,
       duration: course.duration,
       category: course.category,

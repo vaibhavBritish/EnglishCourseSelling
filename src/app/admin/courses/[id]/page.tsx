@@ -164,6 +164,9 @@ const CoursesByIDinAdmin = () => {
         <p className="text-gray-600 mb-6 text-lg leading-relaxed">
           {course.description}
         </p>
+        <p className="text-gray-600 mb-6 text-lg leading-relaxed">
+          {course.description_more}
+        </p>
 
         <div className="flex flex-wrap gap-6 mb-8">
           <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-xl font-medium">
@@ -223,7 +226,7 @@ const CoursesByIDinAdmin = () => {
         )}
       </div>
 
-      {/* 🪄 Edit Video Modal */}
+ 
       {editVideo && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl shadow-2xl p-6 w-[90%] max-w-md">

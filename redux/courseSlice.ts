@@ -4,6 +4,7 @@ type Course = {
     id:string,
     title:string,
     description:string,
+    description_more:string,
     price:number,
     category:string,
     imageUrl:string

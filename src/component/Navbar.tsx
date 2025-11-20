@@ -12,6 +12,7 @@ const courseSubLinks = [
   { label: "IELTS", href: "/courses/ielts" },
   { label: "PTE", href: "/courses/pte" },
   { label: "French", href: "/courses/french" },
+  { label: "Celpip", href: "/courses/celpip" },
 ];
 
 const Navbar = () => {

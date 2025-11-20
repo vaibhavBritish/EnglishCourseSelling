@@ -51,23 +51,28 @@ const Footer = () => {
           <h1 className="text-lg font-semibold mb-4 text-white">Courses</h1>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link href="/courses" className="hover:text-blue-400 transition-colors">
+              <Link href="/courses/english" className="hover:text-blue-400 transition-colors">
                 English
               </Link>
             </li>
             <li>
-              <Link href="/courses" className="hover:text-blue-400 transition-colors">
+              <Link href="/courses/french" className="hover:text-blue-400 transition-colors">
                 French
               </Link>
             </li>
             <li>
-              <Link href="/courses" className="hover:text-blue-400 transition-colors">
-                Spanish
+              <Link href="/courses/ielts" className="hover:text-blue-400 transition-colors">
+                Ielts
               </Link>
             </li>
             <li>
-              <Link href="/courses" className="hover:text-blue-400 transition-colors">
-                German
+              <Link href="/courses/pte" className="hover:text-blue-400 transition-colors">
+                PTE
+              </Link>
+            </li>
+               <li>
+              <Link href="/courses/celpip" className="hover:text-blue-400 transition-colors">
+                CELPIP
               </Link>
             </li>
           </ul>

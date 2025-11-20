@@ -11,6 +11,7 @@ const EditCourse = () => {
   const [course, setCourse] = useState<any>({
     title: "",
     description: "",
+    description_more: "",
     price: "",
     category: "",
     duration: "",
@@ -104,6 +105,18 @@ const EditCourse = () => {
             <textarea
               name="description"
               value={course.description}
+              onChange={handleChange}
+              className="border p-2 rounded mt-1"
+              rows={4}
+              required
+            />
+          </label>
+
+          <label className="flex flex-col">
+            Description2
+            <textarea
+              name="description_more"
+              value={course.description_more}
               onChange={handleChange}
               className="border p-2 rounded mt-1"
               rows={4}
