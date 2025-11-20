@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+import { jwtVerify } from "jose";
 
+const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -14,25 +16,20 @@ export async function middleware(req) {
     }
 
     try {
-      const verifyUrl = new URL("/api/auth/me", req.url);
-      const verifyRes = await fetch(verifyUrl, {
-        headers: {
-          Cookie: `token=${token}`,
-        },
-      });
+      // Verify JWT
+      const { payload } = await jwtVerify(token, secret);
 
-      const { user } = await verifyRes.json();
-
-      if (!user || !user.isAdmin) {
+      if (!payload || !payload.isAdmin) {
         return NextResponse.redirect(
           new URL("/auth/login?message=Access denied", req.url)
         );
       }
 
-      const response = NextResponse.next();
-      response.headers.set("x-user-id", user.id);
-      response.headers.set("x-user-email", user.email);
-      return response;
+      // Pass user info in headers
+      const res = NextResponse.next();
+      res.headers.set("x-user-id", String(payload.id));
+      res.headers.set("x-user-email", String(payload.email));
+      return res;
     } catch (error) {
       console.error("Auth verification error:", error);
       return NextResponse.redirect(
