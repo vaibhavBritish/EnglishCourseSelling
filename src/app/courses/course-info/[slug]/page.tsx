@@ -1,5 +1,5 @@
 import React from "react";
-import { prisma } from "../../../../../prisma/client";
+import { prisma } from "@/lib/prisma";
 import CourseInfoContent from "@/component/CourseInfoContent";
 
 interface CoursePageProps {

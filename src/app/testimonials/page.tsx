@@ -6,7 +6,7 @@ import Leadform from "@/component/Leadform";
 const testimonials = [
   {
     name: "Aarav Sharma",
-    image: "/user1.jpg",
+    // image: "/user1.jpg",
     review:
       "The English course helped me gain confidence in speaking fluently. The lessons are practical, engaging, and very well structured.",
     rating: 5,
@@ -14,7 +14,7 @@ const testimonials = [
   },
   {
     name: "Priya Mehta",
-    image: "/user2.jpg",
+    // image: "/user2.jpg",
     review:
       "I absolutely loved the French classes! The teachers make learning fun and easy to understand, even for beginners.",
     rating: 4,
@@ -22,7 +22,7 @@ const testimonials = [
   },
   {
     name: "Rohit Verma",
-    image: "/user3.jpg",
+    // image: "/user3.jpg",
     review:
       "The best online language platform! I could learn at my own pace and still feel connected with the instructors.",
     rating: 5,
@@ -30,7 +30,7 @@ const testimonials = [
   },
   {
     name: "Sana Khan",
-    image: "/user4.jpg",
+    // image: "/user4.jpg",
     review:
       "Excellent content and great support team. The platform is smooth, and lessons are top quality!",
     rating: 5,
@@ -68,13 +68,13 @@ const Testimonials = () => {
                 className="bg-white shadow-md rounded-2xl p-6 hover:shadow-xl transition duration-300 text-left"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <Image
+                  {/* <Image
                     src={t.image}
                     alt={t.name}
                     width={60}
                     height={60}
                     className="rounded-full object-cover"
-                  />
+                  /> */}
                   <div>
                     <h3 className="font-semibold text-gray-800">{t.name}</h3>
                     <p className="text-sm text-gray-500">{t.course}</p>

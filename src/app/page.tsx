@@ -2,8 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { link } from "fs";
 import Leadform from "@/component/Leadform";
+import { Phone } from "lucide-react";
 
 export default function Home() {
   const courses = [
@@ -115,8 +115,7 @@ export default function Home() {
             Unlock Your Potential <br /> with a New Language
           </h1>
           <p className="max-w-2xl mx-auto text-lg md:text-xl mb-8 opacity-90">
-            Master English and French with our interactive, practical and
-            engaging lessons designed by experts.
+            Master English and French with our interactive, practical and engaging lessons designed by experts.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link href="/courses">
@@ -131,7 +130,15 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Featured Courses */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Link href="/contactus">
+          <button className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-full text-lg font-semibold shadow-xl hover:opacity-90 hover:scale-105 transition">
+            <Phone className="inline-block" />
+          </button>
+        </Link>
+      </div>
+
+
       <section className="bg-[#f3f6fb] py-20 px-6">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -176,11 +183,8 @@ export default function Home() {
         </div>
       </section>
 
-
       <section className="py-20 text-center">
-        <h2 className="text-3xl font-bold mb-10 text-[#155DFC]">
-          Choose Your Course
-        </h2>
+        <h2 className="text-3xl font-bold mb-10 text-[#155DFC]">Choose Your Course</h2>
         <div className="flex justify-center flex-wrap gap-8">
           {languages.map((lang) => (
             <motion.div
@@ -201,11 +205,8 @@ export default function Home() {
         </div>
       </section>
 
-
       <section className="bg-[#f3f6fb] py-20 px-6 text-center">
-        <h2 className="text-3xl font-bold mb-10 text-[#155DFC]">
-          What Our Students Say
-        </h2>
+        <h2 className="text-3xl font-bold mb-10 text-[#155DFC]">What Our Students Say</h2>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
           {testimonials.map((testi) => (
             <motion.div
@@ -223,14 +224,10 @@ export default function Home() {
         </div>
       </section>
 
-
       <section className="py-20 text-center">
-        <h2 className="text-3xl font-bold mb-4 text-[#155DFC]">
-          Flexible Pricing Plans
-        </h2>
+        <h2 className="text-3xl font-bold mb-4 text-[#155DFC]">Flexible Pricing Plans</h2>
         <p className="text-gray-600 max-w-2xl mx-auto mb-12">
-          Choose a plan that fits your learning goals. Upgrade, downgrade, or
-          cancel anytime.
+          Choose a plan that fits your learning goals. Upgrade, downgrade, or cancel anytime.
         </p>
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
           {prices.map((price, i) => (
@@ -240,15 +237,13 @@ export default function Home() {
               className={`rounded-2xl p-8 bg-white shadow-lg hover:shadow-2xl transition transform ${i === 1 ? "border-2 border-blue-500" : ""
                 }`}
             >
-              <h3
-                className={`text-2xl font-bold mb-4 ${i === 1 ? "text-blue-600" : "text-gray-800"
-                  }`}
-              >
+              <h3 className={`text-2xl font-bold mb-4 ${i === 1 ? "text-blue-600" : "text-gray-800"
+                }`}>
                 {price.plan}
               </h3>
               <ul className="text-gray-700 mb-6 text-left space-y-2">
                 {price.features.map((f, index) => (
-                  <li key={index}> {f}</li>
+                  <li key={index}>{f}</li>
                 ))}
               </ul>
               <p className="text-4xl font-bold text-blue-600 mb-4">
@@ -269,17 +264,14 @@ export default function Home() {
       </section>
 
       <section>
-        <Leadform/>
+        <Leadform />
       </section>
-
 
       <section className="bg-[#f3f6fb] py-20 px-6">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="text-center md:text-left">
             <h3 className="text-2xl font-bold mb-2">Stay Updated</h3>
-            <p className="text-gray-700 mb-4">
-              Subscribe to our newsletter and never miss an update.
-            </p>
+            <p className="text-gray-700 mb-4">Subscribe to our newsletter and never miss an update.</p>
             <div className="flex flex-wrap justify-center md:justify-start">
               <input
                 type="email"
@@ -294,16 +286,13 @@ export default function Home() {
 
           <div className="text-center md:text-right">
             <h3 className="text-2xl font-bold mb-2">Need Help?</h3>
-            <p className="text-gray-700 mb-4">
-              Have questions? We're here for you 24/7.
-            </p>
+            <p className="text-gray-700 mb-4">Have questions? We're here for you 24/7.</p>
             <button className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-full hover:opacity-90 transition-transform hover:scale-105">
               Contact Us
             </button>
           </div>
         </div>
       </section>
-
     </div>
   );
 }

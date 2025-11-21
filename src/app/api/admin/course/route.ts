@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../../../prisma/client";
-import { imageKit } from "@/lib/imageKit.js"
+import { prisma } from "@/lib/prisma";
+import { imageKit } from "@/lib/imageKit"
 import slugify from "slugify";
 
 export async function POST(req: NextRequest) {

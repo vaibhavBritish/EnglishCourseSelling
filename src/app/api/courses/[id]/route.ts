@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { prisma } from "../../../../../prisma/client";
+import { prisma } from "@/lib/prisma";
 
 function getUserIdFromCookie(req: NextRequest): string | null {
   const token = req.cookies.get("token")?.value;

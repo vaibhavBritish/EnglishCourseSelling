@@ -1,7 +1,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { prisma } from "../../../../../prisma/client";
+import { prisma } from "@/lib/prisma";
 
 
 export const runtime = "nodejs";
